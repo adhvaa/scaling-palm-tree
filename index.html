@@ -25,44 +25,49 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: rgba(255, 255, 255, 0.9);
+            
             border: 1px solid #ccc;
         }
-        .front  { transform: translateZ(100px); }
-        .back   { transform: rotateY(180deg) translateZ(100px); }
-        .right  { transform: rotateY(90deg) translateZ(100px); }
-        .left   { transform: rotateY(-90deg) translateZ(100px); }
-        .top    { transform: rotateX(90deg) translateZ(100px); }
-        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+        .front  { transform: translateZ(100px); background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%); }
+.back   { transform: rotateY(180deg) translateZ(100px); background: radial-gradient(circle, rgba(255, 255, 0, 1) 0%, rgba(255, 255, 0, 0.1) 100%); }
+.right  { transform: rotateY(90deg) translateZ(100px); background: radial-gradient(circle, rgba(255, 0, 255, 1) 0%, rgba(255, 0, 255, 0.1) 100%); }
+.left   { transform: rotateY(-90deg) translateZ(100px); background: radial-gradient(circle, rgba(0, 255, 255, 1) 0%, rgba(0, 255, 255, 0.1) 100%); }
+.top    { transform: rotateX(90deg) translateZ(100px); background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 0.1) 100%); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(150, 150, 150, 0.1) 100%); }
+        .face {
+            border-radius: 10px;
+            text-align: center;
+            line-height: 200px;
+            border: 2px solid #fff;
+        }
+
+        
     </style>
 </head>
 <body>
     <div class="cube">
-        <div class="front">Front</div>
-        <div class="back">Back</div>
-        <div class="right">Right</div>
-        <div class="left">Left</div>
-        <div class="top">Top</div>
-        <div class="bottom">Bottom</div>
+        <div class="face front">white</div>
+        <div class="face back">Yellow</div>
+        <div class="face right">Magenta</div>
+        <div class="face left">Cyan</div>
+        <div class="face top">White</div>
+        <div class="face bottom">Black</div>
     </div>
 
     <script>
         let cube = document.querySelector('.cube');
+        let cubeShadow = document.querySelector('.cube_shadow');
         let startX, startY, initialRotX = 0, initialRotY = 0;
         startX = startY = 200;
-        //startY = e.clientY;
-        //document.addEventListener('mousemove', (e) => {
-            
-            document.addEventListener('mousemove', onMouseMove);
-         //   document.addEventListener('mouseup', onMouseUp);
-        //});
-
+        document.addEventListener('mousemove', onMouseMove);
+       
         function onMouseMove(e) {
             let deltaX = e.clientX - startX;
             let deltaY = e.clientY - startY;
             let rotX = initialRotX - deltaY * 0.5;
             let rotY = initialRotY + deltaX * 0.5;
             cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            //cubeShadow.style.transform = `translate(-50%, -50%) rotateX(90deg) rotateX(70deg) rotateY(${rotY}deg)`;
         }
 
         function onMouseUp() {
