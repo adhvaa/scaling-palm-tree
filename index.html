@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Cube</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            transition: transform 0.1s;
+        }
+        .cube div {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+        }
+        .front  { transform: translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+    </style>
+</head>
+<body>
+    <div class="cube">
+        <div class="front">Front</div>
+        <div class="back">Back</div>
+        <div class="right">Right</div>
+        <div class="left">Left</div>
+        <div class="top">Top</div>
+        <div class="bottom">Bottom</div>
+    </div>
+
+    <script>
+        let cube = document.querySelector('.cube');
+        let startX, startY, initialRotX = 0, initialRotY = 0;
+        startX = startY = 200;
+        //startY = e.clientY;
+        //document.addEventListener('mousemove', (e) => {
+            
+            document.addEventListener('mousemove', onMouseMove);
+         //   document.addEventListener('mouseup', onMouseUp);
+        //});
+
+        function onMouseMove(e) {
+            let deltaX = e.clientX - startX;
+            let deltaY = e.clientY - startY;
+            let rotX = initialRotX - deltaY * 0.5;
+            let rotY = initialRotY + deltaX * 0.5;
+            cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+
+        function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            initialRotX -= (startY - event.clientY) * 0.5;
+            initialRotY += (event.clientX - startX) * 0.5;
+        }
+    </script>
+
+</body>
+
